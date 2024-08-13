@@ -14,13 +14,13 @@ body {
 }
 
 #root {
-    @apply h-full absolute w-full;
+    @apply h-full absolute w-full overflow-x-hidden;
 }
 
 #menu {
-    @apply bg-white flex flex-col fixed h-screen right-0 z-[-2] w-8/12 md:w-80 py-16 px-2 text-neutral-600 top-0 text-xl transition-transform duration-75;
+    @apply bg-white flex-col fixed flex h-screen right-0 z-[-2] w-8/12 md:w-80 py-16 px-2 text-neutral-600 top-0 text-xl transition-transform duration-75;
 }
 
 .menu-link {
-    @apply rounded-md p-2 hover:bg-neutral-200 transition-all duration-75;
+    @apply rounded-md p-2 hover:bg-neutral-200 transition-colors duration-75;
 }
