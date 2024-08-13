@@ -1,4 +1,6 @@
 import React from "react";
+// import firebase from "firebade/app";
+import Loader from "./Loader";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { db, storage } from "../firebase";
@@ -23,6 +25,7 @@ const initialValues = {
 const Form = () => {
     let navigate = useNavigate();
     const [image, setImage] = useState(null);
+    const [loader, setLoader] = useState(false);
 
     const {
         handleBlur,
@@ -38,6 +41,10 @@ const Form = () => {
         onSubmit: async (values, actions) => {
             if (values.file) {
                 try {
+                    // const storage = await firebase
+                    //     .app()
+                    //     .storage(import.meta.STORAGE_URL);
+                    setLoader(true);
                     const storageRef = ref(
                         storage,
                         `images/${values.file.name}`
@@ -57,21 +64,22 @@ const Form = () => {
                         field_of_study: values.field_of_study,
                         expected_salary: values.expected_salary,
                     });
-
+                    console.log("docRef", docRef);
                     actions.resetForm();
                     setImage(null);
                     actions.setSubmitting(false);
+                    setLoader(false);
+                    navigate(`/`);
                     alert(
                         "Form submitted successfully! We will contact you for Inerview"
                     );
-                    navigate(`/`);
                 } catch (error) {
                     console.error(error);
                 }
             }
         },
     });
-    console.log(errors);
+    // console.log(errors);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -87,6 +95,7 @@ const Form = () => {
 
     return (
         <div className="w-full my-10">
+            {loader && <Loader />}
             <form className="max-w-lg mx-auto" onSubmit={handleSubmit}>
                 <div className="relative z-0 w-full mb-5">
                     <label
